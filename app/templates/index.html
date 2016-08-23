@@ -9,6 +9,38 @@
 <div class="container">
  <h2>Welcome to Tornado Example</h2>
  <hr>
+ <p>WebSocket Status:<span id="status-info"></span><p>
+ <hr>
+ <button class="btn btn-primary" id="broadcast">Broadcast</button>
 </div>
+
+<script type="text/javascript">
+
+var ws = new WebSocket('ws://localhost:7777/ws');
+var $status_info = $("#status-info");
+
+ws.onopen = function() {
+	$status_info.attr("class","label label-success");
+	$status_info.text("Connect Success");
+};
+
+ws.onmessage = function(ev) {
+	$status_info.attr("class","label label-info");
+	$status_info.hide();
+	$status_info.fadeIn("slow");
+	$status_info.text("Receieved Message");
+};
+
+ws.onclose = function(ev) {
+	$status_info.attr("class", "label label-important");
+	$status_info.text("Closed");
+};
+
+ws.onerror = function(ev) {
+	$status_info.attr("class", "label label-warning");
+	$status_info.text("Error");
+};
+
+</script>
 <body>
 </html>
