@@ -11,6 +11,8 @@
  <hr>
  <p>WebSocket Status:<span id="status-info"></span><p>
  <hr>
+ <p>Name: <span id="user-name"></span> Age: <span id="user-age"></span><p>
+ <hr>
  <button class="btn btn-primary" id="broadcast">Broadcast</button>
 </div>
 
@@ -29,6 +31,13 @@ ws.onmessage = function(ev) {
 	$status_info.hide();
 	$status_info.fadeIn("slow");
 	$status_info.text("Receieved Message");
+	var json = JSON.parse(ev.data);
+	$("#user-name").hide();
+	$("#user-name").fadeIn("slow");
+	$("#user-name").text(json.name);
+	$("#user-age").hide();
+	$("#user-age").fadeIn("slow");
+	$("#user-age").text(json.age);
 };
 
 ws.onclose = function(ev) {

@@ -1,4 +1,5 @@
 import os
+import json
 from tornado import web
 from tornado import ioloop
 from tornado import websocket
@@ -23,11 +24,22 @@ class WebSocketHandler(websocket.WebSocketHandler):
 		if self in clients:
 			clients.remove(self)
 
+class ApiHandler(web.RequestHandler):
+	def get(self):
+		name = self.get_argument('name')
+		age = self.get_argument('age')
+		data = {"name":name,"age":age}
+		print 'data',data
+		data = json.dumps(data)
+		for c in clients:
+			c.write_message(data)	
+		self.write(data)
 
 if __name__ == '__main__':
 	application = web.Application([
 		(r'/',IndexHandler),
 		(r'/ws',WebSocketHandler),
+		(r'/api',ApiHandler),
 		],
 		template_path = os.path.join(os.path.dirname(__file__),'templates'),
 		static_path = os.path.join(os.path.dirname(__file__),'static'),
