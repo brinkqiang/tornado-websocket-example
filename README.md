@@ -21,6 +21,8 @@ cd tornado-websocket-example
 virtualenv venv
 source ./venv/bin/activate
 pip install -r requirements.txt
+# In China, you'd try below command
+pip install --trusted-host=http://pypi.douban.com/simple/ -r requirements.txt
 ```
 
 ### WebScoket with Tornado

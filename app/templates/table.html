@@ -1,0 +1,95 @@
+<html>
+ <head>
+  <title>Welcome Tornado</title>
+   <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+   <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{{ static_url('js/jquery.min.js') }}"></script>
+  <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+ </head>
+
+<body>
+<div class="container">
+ <p>WebSocket Status:<span id="status-info"></span><p>
+<hr>
+
+<table class="table">
+	<caption>Match Live Update</caption>
+	<thead>
+		<tr>
+			<th>Product</th>
+			<th>Datetime</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<thead>
+		<tr>
+			<th>产品</th>
+			<th>付款日期</th>
+			<th>状态</th>
+		</tr>
+	</thead>
+	<tbody>
+        {% for i in range(10) %}
+            {% if i  ==  0 %}   <!-- New thing coming -->
+		        <tr class="warning">
+            {% else %}
+		        <tr class="success">
+            {% end %}
+                    <td>{{ i }} </td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+		        </tr>
+        {% end %}
+	</tbody>
+</table>
+
+</div>
+
+<script type="text/javascript">
+
+var ws = new WebSocket('ws://localhost:7777/ws');
+var $status_info = $("#status-info");
+
+var a = new Array();
+
+ws.onopen = function() {
+	$status_info.attr("class","label label-success");
+	$status_info.text("Connect Success");
+};
+
+ws.onmessage = function(ev) {
+	$status_info.attr("class","label label-info");
+	$status_info.hide();
+	$status_info.fadeIn("slow");
+	$status_info.text("Receieved Message");
+	var json = JSON.parse(ev.data);
+    var length = a.unshift(json);
+    if (length == 11){
+        a.pop();
+    }
+
+    for( var i =0 ; i < length; i++){
+        var s = i.toString()
+    	$("#username"+ s).hide();
+    	$("#username"+ s).fadeIn("slow");
+    	$("#username"+ s).text(a[i].name);
+    	$("#userage"+ s).hide();
+    	$("#userage"+ s).fadeIn("slow");
+    	$("#userage"+ s).text(a[i].age);
+    }
+};
+
+ws.onclose = function(ev) {
+	$status_info.attr("class", "label label-important");
+	$status_info.text("Closed");
+};
+
+ws.onerror = function(ev) {
+	$status_info.attr("class", "label label-warning");
+	$status_info.text("Error");
+};
+
+</script>
+<body>
+</html>
