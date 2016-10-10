@@ -26,6 +26,11 @@ class MLUHandler(web.RequestHandler):
         def get(self):
             self.render("mlu.html")
 
+class STHandler(web.RequestHandler):
+        def get(self):
+            self.render("st.html")
+
+
 class WebSocketHandler(websocket.WebSocketHandler):
 	def check_origin(self, origin):
 		return True
@@ -49,6 +54,14 @@ class ApiHandler(web.RequestHandler):
 			c.write_message(data)	
 		self.write(data)
 
+"""
+The below Request Handler is some demo about CanvasJS
+"""
+class LineHandler(web.RequestHandler):
+    def get(self):
+        self.render("line.html")
+
+
 if __name__ == '__main__':
 	application = web.Application([
 		(r'/',IndexHandler),
@@ -56,6 +69,8 @@ if __name__ == '__main__':
 		(r'/api',ApiHandler),
 		(r'/table',TableHandler),
 		(r'/mlu',MLUHandler),
+		(r'/st',STHandler),
+		(r'/line',LineHandler),
 		],
 		template_path = os.path.join(os.path.dirname(__file__),'templates'),
 		static_path = os.path.join(os.path.dirname(__file__),'static'),
