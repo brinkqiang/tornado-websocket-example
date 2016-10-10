@@ -17,27 +17,54 @@
 	<caption>Match Live Update</caption>
 	<thead>
 		<tr>
-			<th>Product</th>
-			<th>Datetime</th>
-			<th>Status</th>
+			<th>Index</th>
+			<th>ID</th>
+			<th>EN</th>
+			<th>CPT</th>
+			<th>CR</th>
+			<th>SCH</th>
+			<th>SCA</th>
+			<th>EID</th>
+			<th>TSID</th>
+			<th>PSID</th>
+			<th>SN</th>
+			<th>SI</th>
 		</tr>
 	</thead>
 	<thead>
 		<tr>
-			<th>产品</th>
-			<th>付款日期</th>
-			<th>状态</th>
+			<th>Index</th>
+			<th>数据反馈ID</th>
+			<th>事件编号</th>
+			<th>当前游戏时间</th>
+			<th>是否停表</th>
+			<th>主场得分</th>
+			<th>客场得分</th>
+			<th>事件编号ID</th>
+			<th>场次</th>
+			<th>比赛状态</th>
+			<th>球赛类型名称</th>
+			<th>球赛类型编号ID</th>
 		</tr>
 	</thead>
 	<tbody>
-        {% for i in range(10) %}
-            {% if i  ==  0 %}   <!-- New thing coming -->
+        {% for i in range(1,11) %}
+            {% if i  ==  1 %}   <!-- New thing coming -->
 		        <tr class="warning">
             {% else %}
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
                     <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
 		        </tr>
         {% end %}

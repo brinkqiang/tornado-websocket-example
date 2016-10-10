@@ -1,0 +1,201 @@
+<html>
+ <head>
+  <title>Welcome Tornado</title>
+   <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+   <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+   <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{{ static_url('js/jquery.min.js') }}"></script>
+  <script src="{{ static_url('js/canvasjs.min.js') }}"></script>
+  <script src="{{ static_url('js/canvasjs.jquery.min.js') }}"></script>
+  <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    
+  <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+      text: "Number of ST"   
+      },
+      animationEnabled: true,
+      axisX:{
+        title: "Rooms"
+      },
+      axisY:{
+        title: "percentage"
+      },
+      data: [
+      {        
+        type: "stackedColumn100",
+        name: "Home",
+        showInLegend: "true",
+        dataPoints: [
+        {  y: 19, label: "AT"},
+        {  y: 0, label: "CR" },
+        {  y: 13, label: "DAT" },
+        {  y: 5, label: "F" },
+        {  y: 6, label: "FK"},               
+        {  y: 1, label: "GK"},               
+        {  y: 0, label: "O"},               
+        {  y: 5, label: "SH"},               
+        {  y: 2, label: "SHB"},               
+        {  y: 2, label: "SHG"},              
+        {  y: 1, label: "SHW"},             
+        {  y: 2, label: "SHT"},            
+        {  y: 18, label: "TI"},           
+        {  y: 1, label: "YC"},         
+        {  y: 1, label: "P"},      
+        {  y: 0, label: "XX"}                
+        ]
+      }, {        
+        type: "stackedColumn100",        
+        name: "Aways",
+        showInLegend: "true",
+        dataPoints: [
+        {  y: 26, label: "AT"},
+        {  y: 4, label: "CR" },
+        {  y: 17, label: "DAT" },
+        {  y: 5, label: "F" },
+        {  y: 5, label: "FK"},               
+        {  y: 3, label: "GK"},                
+        {  y: 1, label: "O"},                
+        {  y: 2, label: "SH"},                
+        {  y: 0, label: "SHB"},                
+        {  y: 2, label: "SHG"},                
+        {  y: 0, label: "SHW"},                
+        {  y: 0, label: "SHT"},                
+        {  y: 10, label: "TI"},                
+        {  y: 2, label: "YC"},                
+        {  y: 0, label: "P"},               
+        {  y: 0, label: "XX"}                
+        ]
+      }
+
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+
+</head>
+
+<body>
+<div class="container">
+ <p>WebSocket Status:<span id="status-info"></span><p>
+<hr>
+ <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</hr>
+<table class="table">
+
+	<thead>
+		<tr>
+			<th>Index</th>
+			<th>ID</th>
+			<th>EN</th>
+			<th>CPT</th>
+			<th>CR</th>
+			<th>SCH</th>
+			<th>SCA</th>
+			<th>EID</th>
+			<th>TSID</th>
+			<th>PSID</th>
+			<th>SN</th>
+			<th>SI</th>
+		</tr>
+	</thead>
+	<thead>
+		<tr>
+			<th>Index</th>
+			<th>数据反馈ID</th>
+			<th>事件编号</th>
+			<th>当前游戏时间</th>
+			<th>是否停表</th>
+			<th>主场得分</th>
+			<th>客场得分</th>
+			<th>事件编号ID</th>
+			<th>场次</th>
+			<th>比赛状态</th>
+			<th>球赛类型名称</th>
+			<th>球赛类型编号ID</th>
+		</tr>
+	</thead>
+	<tbody>
+        {% for i in range(1,6) %}
+            {% if i  ==  1 %}   <!-- New thing coming -->
+		        <tr class="warning">
+            {% else %}
+		        <tr class="success">
+            {% end %}
+                    <td>{{ i }} </td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+		        </tr>
+        {% end %}
+	</tbody>
+</table>
+
+
+
+</div>
+
+<script type="text/javascript">
+
+var ws = new WebSocket('ws://localhost:7777/ws');
+var $status_info = $("#status-info");
+
+var a = new Array();
+
+ws.onopen = function() {
+	$status_info.attr("class","label label-success");
+	$status_info.text("Connect Success");
+};
+
+ws.onmessage = function(ev) {
+	$status_info.attr("class","label label-info");
+	$status_info.hide();
+	$status_info.fadeIn("slow");
+	$status_info.text("Receieved Message");
+	var json = JSON.parse(ev.data);
+    var length = a.unshift(json);
+    if (length == 6){
+        a.pop();
+    }
+
+    for( var i =0 ; i < length; i++){
+        var s = i.toString()
+
+        if (i == 0){
+    	$("#username"+ s).hide();
+    	$("#username"+ s).fadeIn("slow");
+    	$("#userage"+ s).hide();
+    	$("#userage"+ s).fadeIn("slow");
+        }
+    	$("#username"+ s).text(a[i].name);
+
+    	$("#userage"+ s).text(a[i].age);
+    }
+};
+
+ws.onclose = function(ev) {
+	$status_info.attr("class", "label label-important");
+	$status_info.text("Closed");
+};
+
+ws.onerror = function(ev) {
+	$status_info.attr("class", "label label-warning");
+	$status_info.text("Error");
+};
+
+</script>
+
+<body>
+</html>

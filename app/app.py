@@ -20,8 +20,11 @@ class IndexHandler(web.RequestHandler):
 
 class TableHandler(web.RequestHandler):
         def get(self):
-            
             self.render("table.html")
+
+class MLUHandler(web.RequestHandler):
+        def get(self):
+            self.render("mlu.html")
 
 class WebSocketHandler(websocket.WebSocketHandler):
 	def check_origin(self, origin):
@@ -52,6 +55,7 @@ if __name__ == '__main__':
 		(r'/ws',WebSocketHandler),
 		(r'/api',ApiHandler),
 		(r'/table',TableHandler),
+		(r'/mlu',MLUHandler),
 		],
 		template_path = os.path.join(os.path.dirname(__file__),'templates'),
 		static_path = os.path.join(os.path.dirname(__file__),'static'),
