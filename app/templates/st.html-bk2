@@ -23,27 +23,19 @@ ws.onopen = function() {
 	status_info.text("Connect Success");
     window.onload = show(5);
 };
-var column = function(tags, data, num){
-    /*
-    @param tags: a array, example ['ID','EN' ,...]
-    @param data: a list, example ['ID':722273,"EN":"277", ...]
-    @param num: integer, example 1,2,3,4,5
-    */
+var column = function(tags,aa){
      for(var j in tags){
-          var tag = tags[j]
-          var tag_id = "#" + tags[j]+num
-           if(num == 1){
-                $(tag_id).hide();
-                $(tag_id).fadeIn("slow");
-            }
-           $(tag_id).text(data[tag]);
+          var tag_id = "#" + tags[j];
+           $(tag_id).hide();
+           $(tag_id).fadeIn("slow");
+           $(tag_id).text(a[i]);
         }
 }
-
 var show = function(a, length, tags){
     for( var i =0 ; i < length; i++){
         var s = i.toString()
-        column(tags, a[i], i+1);
+        if (i == 0){
+
     }
 }
 
@@ -58,8 +50,7 @@ ws.onmessage = function(ev) {
     if (length == 6){
         a.pop();
     }
-    var tags = new Array("ID","EN","CPT");
-    show(a, length, tags);
+    show(a, length);
 };
 
 ws.onclose = function(ev) {
@@ -130,9 +121,9 @@ ws.onerror = function(ev) {
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
-                    <td><span id="XID{{i}}"></span></td>
-                    <td><span id="XEN{{i}}"></span></td>
-                    <td><span id="XCPT{{i}}"></span></td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
@@ -192,9 +183,9 @@ ws.onerror = function(ev) {
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
-                    <td><span id="ID{{i}}"></span></td>
-                    <td><span id="EN{{i}}"></span></td>
-                    <td><span id="CPT{{i}}"></span></td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>

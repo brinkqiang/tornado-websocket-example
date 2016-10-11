@@ -12,6 +12,72 @@
   <script type="text/javascript">
   var global_st;
 
+ var show = function (xx) {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+      text: "Number of ST"   
+      },
+      animationEnabled: true,
+      axisX:{
+        title: "Room"
+      },
+      axisY:{
+        title: "percentage"
+      },
+      data: [
+      {        
+        type: "stackedColumn100",
+        name: "Home",
+        showInLegend: "true",
+        dataPoints: [
+        {  y: 19, label: "AT"},
+        {  y: 0, label: "CR" },
+        {  y: 13, label: "DAT" },
+        {  y: 5, label: "F" },
+        {  y: 6, label: "FK"},               
+        {  y: 1, label: "GK"},               
+        {  y: 0, label: "O"},               
+        {  y: 5, label: "SH"},               
+        {  y: 2, label: "SHB"},               
+        {  y: 2, label: "SHG"},              
+        {  y: 1, label: "SHW"},             
+        {  y: 2, label: "SHT"},            
+        {  y: 18, label: "TI"},           
+        {  y: 1, label: "YC"},         
+        {  y: 1, label: "P"},      
+        {  y: xx, label: "XX"}                
+        ]
+      }, {        
+        type: "stackedColumn100",        
+        name: "Aways",
+        showInLegend: "true",
+        dataPoints: [
+        {  y: 26, label: "AT"},
+        {  y: 4, label: "CR" },
+        {  y: 17, label: "DAT" },
+        {  y: 5, label: "F" },
+        {  y: 5, label: "FK"},               
+        {  y: 3, label: "GK"},                
+        {  y: 1, label: "O"},                
+        {  y: 2, label: "SH"},                
+        {  y: 0, label: "SHB"},                
+        {  y: 2, label: "SHG"},                
+        {  y: 0, label: "SHW"},                
+        {  y: 0, label: "SHT"},                
+        {  y: 10, label: "TI"},                
+        {  y: 2, label: "YC"},                
+        {  y: 0, label: "P"},               
+        {  y: 1, label: "XX"}                
+        ]
+      }
+
+      ]
+    });
+
+    chart.render();
+  }
+
 var ws = new WebSocket('ws://192.168.90.75:7777/ws');
 var a = new Array();
 
@@ -23,29 +89,6 @@ ws.onopen = function() {
 	status_info.text("Connect Success");
     window.onload = show(5);
 };
-var column = function(tags, data, num){
-    /*
-    @param tags: a array, example ['ID','EN' ,...]
-    @param data: a list, example ['ID':722273,"EN":"277", ...]
-    @param num: integer, example 1,2,3,4,5
-    */
-     for(var j in tags){
-          var tag = tags[j]
-          var tag_id = "#" + tags[j]+num
-           if(num == 1){
-                $(tag_id).hide();
-                $(tag_id).fadeIn("slow");
-            }
-           $(tag_id).text(data[tag]);
-        }
-}
-
-var show = function(a, length, tags){
-    for( var i =0 ; i < length; i++){
-        var s = i.toString()
-        column(tags, a[i], i+1);
-    }
-}
 
 ws.onmessage = function(ev) {
     var status_info = $("#status-info");
@@ -58,8 +101,23 @@ ws.onmessage = function(ev) {
     if (length == 6){
         a.pop();
     }
-    var tags = new Array("ID","EN","CPT");
-    show(a, length, tags);
+
+    for( var i =0 ; i < length; i++){
+        var s = i.toString()
+
+        if (i == 0){
+    	$("#username"+ s).hide();
+    	$("#username"+ s).fadeIn("slow");
+    	$("#userage"+ s).hide();
+    	$("#userage"+ s).fadeIn("slow");
+        global_st = parseInt(a[i].age);
+        }
+    	$("#username"+ s).text(a[i].name);
+
+    	$("#userage"+ s).text(a[i].age);
+
+    }
+    window.onload = show(global_st);
 };
 
 ws.onclose = function(ev) {
@@ -130,9 +188,9 @@ ws.onerror = function(ev) {
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
-                    <td><span id="XID{{i}}"></span></td>
-                    <td><span id="XEN{{i}}"></span></td>
-                    <td><span id="XCPT{{i}}"></span></td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
@@ -192,9 +250,9 @@ ws.onerror = function(ev) {
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
-                    <td><span id="ID{{i}}"></span></td>
-                    <td><span id="EN{{i}}"></span></td>
-                    <td><span id="CPT{{i}}"></span></td>
+                    <td><span id="username{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
+                    <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>
                     <td><span id="userage{{i}}"></span></td>

@@ -49,6 +49,7 @@ class ApiHandler(web.RequestHandler):
 		age = self.get_argument('age')
 		data = {"name":name,"age":age}
 		print 'data',data
+                data = {"ID":123,"EN":568,"CPT":888}
 		data = json.dumps(data)
 		for c in clients:
 			c.write_message(data)	
