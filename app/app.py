@@ -28,7 +28,8 @@ class MLUHandler(web.RequestHandler):
 
 class STHandler(web.RequestHandler):
         def get(self):
-            self.render("st.html")
+            mlu = ["ID","EN","CPT","CR","SCH","SCA","EID" ,"TSID","PSID","SN","SI"]
+            self.render("st.html", mlu=mlu)
 
 
 class WebSocketHandler(websocket.WebSocketHandler):
@@ -49,7 +50,7 @@ class ApiHandler(web.RequestHandler):
 		age = self.get_argument('age')
 		data = {"name":name,"age":age}
 		print 'data',data
-                data = {"ID":123,"EN":568,"CPT":888}
+                data = {"ID":123,"EN":568,"CPT":888, "CR":77877,"SCH":8899,"SCA":222}
 		data = json.dumps(data)
 		for c in clients:
 			c.write_message(data)	

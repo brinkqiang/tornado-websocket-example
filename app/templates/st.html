@@ -58,7 +58,7 @@ ws.onmessage = function(ev) {
     if (length == 6){
         a.pop();
     }
-    var tags = new Array("ID","EN","CPT");
+    var tags= new Array("ID","EN","CPT","CR","SCH","SCA","EID" ,"TSID","PSID","SN","SI");
     show(a, length, tags);
 };
 
@@ -192,17 +192,10 @@ ws.onerror = function(ev) {
 		        <tr class="success">
             {% end %}
                     <td>{{ i }} </td>
-                    <td><span id="ID{{i}}"></span></td>
-                    <td><span id="EN{{i}}"></span></td>
-                    <td><span id="CPT{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
-                    <td><span id="userage{{i}}"></span></td>
+
+                    {% for m in mlu %}
+                        <td><span id="{{m}}{{i}}"></span></td>
+                    {% end %}
 		        </tr>
         {% end %}
 	</tbody>
