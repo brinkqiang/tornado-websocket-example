@@ -20,13 +20,13 @@ class WebSocketHandler(websocket.WebSocketHandler):
 		return True
 
 	def open(self):
-        print("open a connection")
+		print("open a connection")
         
     def on_message(self, msg):
-        self.write_message('response by {}:{}'.format(node_id, msg))
+		self.write_message('response by {}:{}'.format(node_id, msg))
 
 	def on_close(self):
-        pass
+		pass
 
 if __name__ == '__main__':
         options.parse_command_line()
