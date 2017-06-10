@@ -31,17 +31,16 @@ class WebSocketHandler(websocket.WebSocketHandler):
         pass
 
 if __name__ == '__main__':
-        options.parse_command_line()
-        application = web.Application([
+	options.parse_command_line()
+	application = web.Application([
         (r'/ws',WebSocketHandler),
         ],
         debug=True)
-
-    application.listen(options.port)
-    print 'Listen on ', options.port
-    r.lpush("NODE_HOST_LIST","127.0.0.1:{}".format(options.port))
-    """
+	application.listen(options.port)
+	print 'Listen on ', options.port
+	r.lpush("NODE_HOST_LIST","127.0.0.1:{}".format(options.port))
+	"""
     when the node has shutdown, should clean the node information by pop out ...
     so the node need to do some signal catch (i.e CTRL+C ) and then clean it ...
     """
-    ioloop.IOLoop.instance().start()
+	ioloop.IOLoop.instance().start()
