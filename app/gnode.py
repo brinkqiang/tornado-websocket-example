@@ -34,8 +34,9 @@ class WebSocketHandler(websocket.WebSocketHandler):
 
 @atexit.register
 def remove_node_from_host_list():
-    r.delete(node_id)
-    print("remove node data successful ~~")
+	r.delete(node_id)
+	r.lrem("NODE_HOST_LIST", node_id)
+	print("remove node data successful ~~")
 
 if __name__ == '__main__':
 	options.parse_command_line()
