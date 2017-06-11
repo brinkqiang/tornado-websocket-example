@@ -39,6 +39,8 @@ if __name__ == '__main__':
 	application.listen(options.port)
 	print 'Listen on ', options.port
 	r.lpush("NODE_HOST_LIST","127.0.0.1:{}".format(options.port))
+    #init host_connection map
+    r.set(node_id, 0)
 	"""
     when the node has shutdown, should clean the node information by pop out ...
     so the node need to do some signal catch (i.e CTRL+C ) and then clean it ...
