@@ -1,3 +1,4 @@
+import atexit
 import os
 import json
 from tornado import web
@@ -29,6 +30,11 @@ class WebSocketHandler(websocket.WebSocketHandler):
 
     def on_close(self):
         pass
+
+@atexit.register
+def remove_node_from_host_list():
+    r.del(node_id)
+    print("remove node data successful ~~")
 
 if __name__ == '__main__':
 	options.parse_command_line()
