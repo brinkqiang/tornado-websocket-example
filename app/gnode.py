@@ -23,17 +23,18 @@ class WebSocketHandler(websocket.WebSocketHandler):
         return True
 
     def open(self):
-        print("open a connection")
+		r.incr(node_id)
+		print("open a connection")
 
     def on_message(self, msg):
 		self.write_message('response by {}:{}'.format(node_id, msg))
 
     def on_close(self):
-        pass
+		r.decr(node_id)
 
 @atexit.register
 def remove_node_from_host_list():
-    r.del(node_id)
+    r.delete(node_id)
     print("remove node data successful ~~")
 
 if __name__ == '__main__':
@@ -45,8 +46,9 @@ if __name__ == '__main__':
 	application.listen(options.port)
 	print 'Listen on ', options.port
 	r.lpush("NODE_HOST_LIST","127.0.0.1:{}".format(options.port))
-    #init host_connection map
-    r.set(node_id, 0)
+	#init host_connection map
+	node_id = "127.0.0.1:{}".format(options.port)
+	r.set(node_id, 0)
 	"""
     when the node has shutdown, should clean the node information by pop out ...
     so the node need to do some signal catch (i.e CTRL+C ) and then clean it ...
